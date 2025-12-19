@@ -1,0 +1,36 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          cd Zeal-macos
+          xcodebuild \
+            -scheme Zeal \
+            -configuration Release \
+            -derivedDataPath ./build \
+            -destination 'generic/platform=macOS' \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            "GIT_COMMIT_SHA=${{ github.sha }}" \
+            build
+
+      - name: Create ZIP
+        run: |
+          cd Zeal-macos/build/Build/Products/Release
+          zip -r Zeal.zip Zeal.app
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: Zeal-macos/build/Build/Products/Release/Zeal.zip

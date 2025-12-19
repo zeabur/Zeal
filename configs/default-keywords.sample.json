@@ -1,0 +1,16 @@
+[
+    {
+        "id": "sample-001",
+        "shortcut": "Google",
+        "name": "Search Google",
+        "url": "https://www.google.com/search?q={param}",
+        "isEnabled": true
+    },
+    {
+        "id": "sample-002",
+        "shortcut": "GitHub",
+        "name": "Search GitHub",
+        "url": "https://github.com/search?q={param}",
+        "isEnabled": true
+    }
+]

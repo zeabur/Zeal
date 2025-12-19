@@ -1,0 +1,58 @@
+[
+  {
+    "id": "A1000001-0001-0001-0001-000000000001",
+    "shortcut": "Deployment",
+    "name": "Find deployment in Zeabur admin",
+    "url": "https://admin.zeabur.com/deployments/{param}",
+    "isEnabled": true
+  },
+  {
+    "id": "A1000001-0001-0001-0001-000000000002",
+    "shortcut": "Domain",
+    "name": "Find domain in Zeabur admin",
+    "url": "https://admin.zeabur.com/domains/{param}",
+    "isEnabled": true
+  },
+  {
+    "id": "A1000001-0001-0001-0001-000000000003",
+    "shortcut": "Environment",
+    "name": "Find environment in Zeabur admin",
+    "url": "https://admin.zeabur.com/environments/{param}",
+    "isEnabled": true
+  },
+  {
+    "id": "A1000001-0001-0001-0001-000000000004",
+    "shortcut": "Project",
+    "name": "Find project in Zeabur admin",
+    "url": "https://admin.zeabur.com/projects/{param}",
+    "isEnabled": true
+  },
+  {
+    "id": "A1000001-0001-0001-0001-000000000005",
+    "shortcut": "Server",
+    "name": "Find server in Zeabur",
+    "url": "https://admin.zeabur.com/servers/{param}",
+    "isEnabled": true
+  },
+  {
+    "id": "A1000001-0001-0001-0001-000000000006",
+    "shortcut": "Service",
+    "name": "Find service in Zeabur admin",
+    "url": "https://admin.zeabur.com/services/{param}",
+    "isEnabled": true
+  },
+  {
+    "id": "A1000001-0001-0001-0001-000000000007",
+    "shortcut": "Upload",
+    "name": "Find upload in admin",
+    "url": "https://admin.zeabur.com/uploads/{param}",
+    "isEnabled": true
+  },
+  {
+    "id": "A1000001-0001-0001-0001-000000000008",
+    "shortcut": "User",
+    "name": "Find user in Zeabur admin",
+    "url": "https://admin.zeabur.com/users/{param}",
+    "isEnabled": true
+  }
+]
