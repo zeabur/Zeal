@@ -1,8 +1,16 @@
 import AppKit
 
 enum SearchResult: Identifiable, Equatable, Hashable {
+    static func == (lhs: SearchResult, rhs: SearchResult) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
     case keyword(Keyword)
     case app(AppResult)
+    case zeabur(id: String, title: String, subtitle: String, action: () -> Void)
 
     var id: String {
         switch self {
@@ -10,6 +18,8 @@ enum SearchResult: Identifiable, Equatable, Hashable {
             return "keyword-\(keyword.id.uuidString)"
         case .app(let app):
             return "app-\(app.id)"
+        case .zeabur(let id, _, _, _):
+            return id
         }
     }
 
@@ -19,6 +29,8 @@ enum SearchResult: Identifiable, Equatable, Hashable {
             return keyword.shortcut
         case .app(let app):
             return app.name
+        case .zeabur(_, let title, _, _):
+            return title
         }
     }
 
@@ -28,6 +40,8 @@ enum SearchResult: Identifiable, Equatable, Hashable {
             return keyword.name.isEmpty ? nil : keyword.name
         case .app:
             return "Application"
+        case .zeabur(_, _, let subtitle, _):
+            return subtitle
         }
     }
 
@@ -35,7 +49,7 @@ enum SearchResult: Identifiable, Equatable, Hashable {
         switch self {
         case .keyword(let keyword):
             return keyword.isParameterized
-        case .app:
+        case .app, .zeabur:
             return false
         }
     }
@@ -46,6 +60,10 @@ enum SearchResult: Identifiable, Equatable, Hashable {
             return nil
         case .app(let app):
             return app.icon
+        case .zeabur:
+            // TODO: Use a proper icon (e.g. from Asset catalog)
+            // For now, return nil which renders a fallback or we can use SF Symbol in the view
+            return nil
         }
     }
 
@@ -55,6 +73,8 @@ enum SearchResult: Identifiable, Equatable, Hashable {
             URLExecutor.execute(keyword: keyword, param: param)
         case .app(let app):
             app.launch()
+        case .zeabur(_, _, _, let action):
+            action()
         }
     }
 }

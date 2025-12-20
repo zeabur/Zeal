@@ -167,9 +167,22 @@ final class SearchViewModel: ObservableObject {
 
         // Get app results
         let apps = appSearch.results.map { SearchResult.app($0) }
-
-        // Combine: keywords first, then apps
-        results = keywords + apps
+        
+        // Zeabur results
+        Task {
+            let zeaburResults = await ZeaburSearchProvider.search(query: searchText)
+            
+            // Map Zeabur internal results to our SearchResult enum
+            // Ideally ZeaburSearchProvider should return SearchResult type directly,
+            // but for now let's assume it returns internal struct or [SearchResult].
+            // Wait, ZeaburSearchProvider.search returns [SearchResult] based on my implementation.
+            
+            let combined = keywords + zeaburResults + apps
+            
+            await MainActor.run {
+                self.results = combined
+            }
+        }
     }
 
     /// Returns the autocomplete hint showing the full title with user input preserved

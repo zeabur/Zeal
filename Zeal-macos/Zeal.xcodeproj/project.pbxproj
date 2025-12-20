@@ -28,6 +28,8 @@
 		A1000015 /* ZeaburService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000016 /* ZeaburService.swift */; };
 		A1000016 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000017 /* KeychainService.swift */; };
 		A1000017 /* ZeaburUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000018 /* ZeaburUser.swift */; };
+		A1000018 /* ZeaburModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000019 /* ZeaburModels.swift */; };
+		A1000019 /* ZeaburSearchProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000020 /* ZeaburSearchProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		A2000016 /* ZeaburService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeaburService.swift; sourceTree = "<group>"; };
 		A2000017 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		A2000018 /* ZeaburUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeaburUser.swift; sourceTree = "<group>"; };
+		A2000019 /* ZeaburModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeaburModels.swift; sourceTree = "<group>"; };
+		A2000020 /* ZeaburSearchProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeaburSearchProvider.swift; sourceTree = "<group>"; };
 		A4000001 /* Zeal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zeal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -108,6 +112,7 @@
 				A2000004 /* KeywordStore.swift */,
 				A2000014 /* SearchResult.swift */,
 				A2000018 /* ZeaburUser.swift */,
+				A2000019 /* ZeaburModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 				A2000015 /* AppSearchService.swift */,
 				A2000016 /* ZeaburService.swift */,
 				A2000017 /* KeychainService.swift */,
+				A2000020 /* ZeaburSearchProvider.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -247,6 +253,8 @@
 				A1000015 /* ZeaburService.swift in Sources */,
 				A1000016 /* KeychainService.swift in Sources */,
 				A1000017 /* ZeaburUser.swift in Sources */,
+				A1000018 /* ZeaburModels.swift in Sources */,
+				A1000019 /* ZeaburSearchProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,6 +14,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         setupStatusItem()
         setupHotkey()
+        
+        // Pre-fetch Zeabur projects
+        Task {
+            do {
+                _ = try await ZeaburService.shared.fetchProjects()
+                print("Pre-fetched Zeabur projects")
+            } catch {
+                print("Failed to pre-fetch Zeabur projects: \(error)")
+            }
+        }
     }
 
     private func setupStatusItem() {
