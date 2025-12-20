@@ -8,12 +8,17 @@ final class ZeaburService {
     
     // Simple memory cache
     private var cachedProjects: [ZeaburProject]?
+    private var cachedUser: ZeaburUser?
     private var lastFetchTime: Date?
     private let cacheTTL: TimeInterval = 300 // 5 minutes
     
     // Published property to allow views to react to auth state changes
     // Note: Since this is a singleton, we might want to use ObservableObject or similar pattern
     // For now, we'll keep it simple and just provide accessors.
+    
+    var user: ZeaburUser? {
+        return cachedUser
+    }
     
     var apiKey: String? {
         get { KeychainService.shared.load(key: keychainKey) }
@@ -22,6 +27,8 @@ final class ZeaburService {
                 try? KeychainService.shared.save(key: keychainKey, value: value)
             } else {
                 try? KeychainService.shared.delete(key: keychainKey)
+                self.cachedUser = nil
+                self.cachedProjects = nil
             }
         }
     }
@@ -66,6 +73,7 @@ final class ZeaburService {
         
         do {
             let result = try JSONDecoder().decode(MeResponse.self, from: data)
+            self.cachedUser = result.data.me
             return result.data.me
         } catch {
              // If decoding fails, check if it's a GraphQL error

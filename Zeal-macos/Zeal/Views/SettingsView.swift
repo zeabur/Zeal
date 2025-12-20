@@ -18,7 +18,13 @@ struct SettingsView: View {
         launchAtLogin = SMAppService.mainApp.status == .enabled
         if let key = ZeaburService.shared.apiKey {
             apiKey = key
-            // Optimistically fetch user info if key exists
+            
+            // 1. Try to load cached user immediately to avoid flicker
+            if let cachedUser = ZeaburService.shared.user {
+                self.zeaburUser = cachedUser
+            }
+            
+            // 2. Fetch fresh info in background
             verifyKey(key, silent: true)
         }
     }
