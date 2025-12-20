@@ -10,6 +10,7 @@ DerivedData/
 # Configs
 configs/*.json
 !configs/default-keywords.sample.json
+*.json
 
 # Windows
 .vs/
