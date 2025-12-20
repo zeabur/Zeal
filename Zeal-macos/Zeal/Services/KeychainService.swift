@@ -1,0 +1,80 @@
+import Foundation
+import Security
+
+final class KeychainService {
+    static let shared = KeychainService()
+    
+    private init() {}
+    
+    enum KeychainError: Error {
+        case duplicateEntry
+        case unknown(OSStatus)
+        case itemNotFound
+    }
+    
+    func save(key: String, value: String) throws {
+        let data = value.data(using: .utf8)!
+        
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: key,
+            kSecValueData as String: data
+        ]
+        
+        // Try to add
+        let status = SecItemAdd(query as CFDictionary, nil)
+        
+        if status == errSecDuplicateItem {
+            // Item already exists, update it
+            let attributesToUpdate: [String: Any] = [
+                kSecValueData as String: data
+            ]
+            
+            let updateQuery: [String: Any] = [
+                kSecClass as String: kSecClassGenericPassword,
+                kSecAttrAccount as String: key
+            ]
+            
+            let updateStatus = SecItemUpdate(updateQuery as CFDictionary, attributesToUpdate as CFDictionary)
+            
+            if updateStatus != errSecSuccess {
+                throw KeychainError.unknown(updateStatus)
+            }
+        } else if status != errSecSuccess {
+            throw KeychainError.unknown(status)
+        }
+    }
+    
+    func load(key: String) -> String? {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: key,
+            kSecReturnData as String: true,
+            kSecMatchLimit as String: kSecMatchLimitOne
+        ]
+        
+        var dataTypeRef: AnyObject?
+        let status = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
+        
+        if status == errSecSuccess {
+            if let data = dataTypeRef as? Data {
+                return String(data: data, encoding: .utf8)
+            }
+        }
+        
+        return nil
+    }
+    
+    func delete(key: String) throws {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: key
+        ]
+        
+        let status = SecItemDelete(query as CFDictionary)
+        
+        if status != errSecSuccess && status != errSecItemNotFound {
+            throw KeychainError.unknown(status)
+        }
+    }
+}

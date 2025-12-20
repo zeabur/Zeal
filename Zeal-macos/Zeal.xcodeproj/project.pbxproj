@@ -25,6 +25,9 @@
 		BA100001 /* KeyablePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB200001 /* KeyablePanel.swift */; };
 		BA100002 /* SettingsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB200002 /* SettingsComponents.swift */; };
 		BA100003 /* Key+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB200003 /* Key+Description.swift */; };
+		A1000015 /* ZeaburService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000016 /* ZeaburService.swift */; };
+		A1000016 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000017 /* KeychainService.swift */; };
+		A1000017 /* ZeaburUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000018 /* ZeaburUser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +50,9 @@
 		BB200001 /* KeyablePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyablePanel.swift; sourceTree = "<group>"; };
 		BB200002 /* SettingsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsComponents.swift; sourceTree = "<group>"; };
 		BB200003 /* Key+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Key+Description.swift"; sourceTree = "<group>"; };
+		A2000016 /* ZeaburService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeaburService.swift; sourceTree = "<group>"; };
+		A2000017 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		A2000018 /* ZeaburUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeaburUser.swift; sourceTree = "<group>"; };
 		A4000001 /* Zeal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zeal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -101,6 +107,7 @@
 				A2000003 /* Keyword.swift */,
 				A2000004 /* KeywordStore.swift */,
 				A2000014 /* SearchResult.swift */,
+				A2000018 /* ZeaburUser.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -140,6 +147,8 @@
 				A2000009 /* HotkeyManager.swift */,
 				A2000010 /* URLExecutor.swift */,
 				A2000015 /* AppSearchService.swift */,
+				A2000016 /* ZeaburService.swift */,
+				A2000017 /* KeychainService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -235,6 +244,9 @@
 				BA100001 /* KeyablePanel.swift in Sources */,
 				BA100002 /* SettingsComponents.swift in Sources */,
 				BA100003 /* Key+Description.swift in Sources */,
+				A1000015 /* ZeaburService.swift in Sources */,
+				A1000016 /* KeychainService.swift in Sources */,
+				A1000017 /* ZeaburUser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
