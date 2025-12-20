@@ -22,6 +22,9 @@
 		A1000012 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = A3000001 /* HotKey */; };
 		A1000013 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000014 /* SearchResult.swift */; };
 		A1000014 /* AppSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000015 /* AppSearchService.swift */; };
+		BA100001 /* KeyablePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB200001 /* KeyablePanel.swift */; };
+		BA100002 /* SettingsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB200002 /* SettingsComponents.swift */; };
+		BA100003 /* Key+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB200003 /* Key+Description.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +44,9 @@
 		A2000013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2000014 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		A2000015 /* AppSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSearchService.swift; sourceTree = "<group>"; };
+		BB200001 /* KeyablePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyablePanel.swift; sourceTree = "<group>"; };
+		BB200002 /* SettingsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsComponents.swift; sourceTree = "<group>"; };
+		BB200003 /* Key+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Key+Description.swift"; sourceTree = "<group>"; };
 		A4000001 /* Zeal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zeal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -76,6 +82,7 @@
 				A2000012 /* Zeal.entitlements */,
 				A2000013 /* Info.plist */,
 				3659A1652EE8928E00ACE522 /* default-keywords.json */,
+				BA600002 /* Extensions */,
 			);
 			path = Zeal;
 			sourceTree = "<group>";
@@ -105,8 +112,26 @@
 				A2000006 /* SearchView.swift */,
 				A2000007 /* SettingsView.swift */,
 				A2000008 /* KeywordEditorView.swift */,
+				BB200001 /* KeyablePanel.swift */,
+				BA600001 /* Components */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		BA600001 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BB200002 /* SettingsComponents.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		BA600002 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BB200003 /* Key+Description.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		A6000006 /* Services */ = {
@@ -207,6 +232,9 @@
 				A1000010 /* URLExecutor.swift in Sources */,
 				A1000013 /* SearchResult.swift in Sources */,
 				A1000014 /* AppSearchService.swift in Sources */,
+				BA100001 /* KeyablePanel.swift in Sources */,
+				BA100002 /* SettingsComponents.swift in Sources */,
+				BA100003 /* Key+Description.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
