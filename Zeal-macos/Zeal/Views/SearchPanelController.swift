@@ -2,12 +2,7 @@ import AppKit
 import SwiftUI
 import Combine
 
-// MARK: - Keyable Panel
 
-final class KeyablePanel: NSPanel {
-    override var canBecomeKey: Bool { true }
-    override var canBecomeMain: Bool { true }
-}
 
 // MARK: - Panel Controller
 
@@ -87,11 +82,14 @@ final class SearchViewModel: ObservableObject {
 
     var onDismiss: (() -> Void)?
 
-    private let store = KeywordStore.shared
-    private let appSearch = AppSearchService.shared
+    private let store: KeywordStore
+    private let appSearch: AppSearchService
     private var cancellables = Set<AnyCancellable>()
 
-    init() {
+    init(store: KeywordStore = .shared, appSearch: AppSearchService = .shared) {
+        self.store = store
+        self.appSearch = appSearch
+
         // Update results when searchText changes
         $searchText
             .debounce(for: .milliseconds(50), scheduler: RunLoop.main)
@@ -188,12 +186,13 @@ final class SearchViewModel: ObservableObject {
         guard selectedIndex < results.count else { return }
         let result = results[selectedIndex]
 
-        if result.isParameterized {
+        guard !result.isParameterized else {
             selectCurrent()
-        } else {
-            result.execute(param: nil)
-            onDismiss?()
+            return
         }
+
+        result.execute(param: nil)
+        onDismiss?()
     }
 
     func unlock() {
@@ -213,25 +212,32 @@ final class SearchViewModel: ObservableObject {
     }
 
     func execute() {
-        // If result is locked (parameterized keyword), execute with param
         if let result = lockedResult {
-            let param = paramText.isEmpty ? nil : paramText
-            guard !result.isParameterized || param != nil else { return }
-            result.execute(param: param)
-            onDismiss?()
+            executeLocked(result)
             return
         }
+        executeSelected()
+    }
 
-        // If not locked, check if parameterized
+    private func executeLocked(_ result: SearchResult) {
+        let param = paramText.isEmpty ? nil : paramText
+        guard !result.isParameterized || param != nil else { return }
+
+        result.execute(param: param)
+        onDismiss?()
+    }
+
+    private func executeSelected() {
         guard selectedIndex < results.count else { return }
         let result = results[selectedIndex]
 
-        if result.isParameterized {
+        guard !result.isParameterized else {
             selectCurrent()
-        } else {
-            result.execute(param: nil)
-            onDismiss?()
+            return
         }
+
+        result.execute(param: nil)
+        onDismiss?()
     }
 
     func dismiss() {
