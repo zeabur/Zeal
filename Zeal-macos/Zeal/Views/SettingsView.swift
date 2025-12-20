@@ -8,20 +8,35 @@ struct SettingsView: View {
     @State private var isAdding = false
     @State private var editingKeyword: Keyword?
     @State private var launchAtLogin = false
+    @State private var apiKey = ""
+    @State private var zeaburUser: ZeaburUser?
+    @State private var isVerifying = false
+    @State private var authError: String?
+
+    // Load initial state
+    private func loadState() {
+        launchAtLogin = SMAppService.mainApp.status == .enabled
+        if let key = ZeaburService.shared.apiKey {
+            apiKey = key
+            // Optimistically fetch user info if key exists
+            verifyKey(key, silent: true)
+        }
+    }
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
-                keywordsSection
+
+                generalSection
                 Divider().opacity(0.5)
-                settingsSection
+                keywordsSection
                 Divider().opacity(0.5)
                 aboutSection
             }
             .padding(24)
         }
-        .frame(width: 480, height: 520)
-        .onAppear { launchAtLogin = SMAppService.mainApp.status == .enabled }
+        .frame(width: 480, height: 600)
+        .onAppear { loadState() }
         .sheet(isPresented: $isAdding) {
             KeywordEditorView(mode: .add) { keyword in
                 store.add(keyword)
@@ -76,15 +91,74 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: - Settings Section
 
-    private var settingsSection: some View {
+
+    // MARK: - General Section
+    
+    private var generalSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            SectionHeader("Settings")
-
+            SectionHeader("General")
+            
+            // Authentication
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Zeabur Account")
+                    .font(.system(size: 13, weight: .medium))
+                
+                if let user = zeaburUser {
+                    HStack {
+                        Image(systemName: "person.circle.fill")
+                            .foregroundColor(.green)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(user.name)
+                                .font(.system(size: 13, weight: .medium))
+                            Text("@\(user.username)")
+                                .font(.system(size: 11))
+                                .foregroundColor(.secondary)
+                        }
+                        Spacer()
+                        Button("Sign Out") {
+                            ZeaburService.shared.apiKey = nil
+                            apiKey = ""
+                            zeaburUser = nil
+                        }
+                        .controlSize(.small)
+                    }
+                    .padding(10)
+                    .background(Color.primary.opacity(0.05))
+                    .cornerRadius(8)
+                } else {
+                    HStack {
+                        SecureField("API Key", text: $apiKey)
+                            .textFieldStyle(.roundedBorder)
+                        
+                        Button(action: { verifyKey(apiKey) }) {
+                            if isVerifying {
+                                ProgressView().controlSize(.small)
+                            } else {
+                                Text("Verify")
+                            }
+                        }
+                        .disabled(apiKey.isEmpty || isVerifying)
+                    }
+                    
+                    if let error = authError {
+                        Text(error)
+                            .font(.system(size: 11))
+                            .foregroundColor(.red)
+                    }
+                    
+                    Text("Enter your Zeabur API Key to access your projects.")
+                        .font(.system(size: 11))
+                        .foregroundColor(.secondary)
+                }
+            }
+            
+            Divider().opacity(0.5).padding(.vertical, 8)
+            
+            // System Settings
             VStack(spacing: 12) {
                 HStack {
-                    Text("Hotkey")
+                    Text("Global Hotkey")
                         .font(.system(size: 13))
                     Spacer()
                     Text(hotkeyManager.hotkeyDescription)
@@ -137,6 +211,37 @@ struct SettingsView: View {
     }
 
     // MARK: - Actions
+
+    private func verifyKey(_ key: String, silent: Bool = false) {
+        guard !key.isEmpty else { return }
+        isVerifying = true
+        authError = nil
+        
+        Task {
+            do {
+                let user = try await ZeaburService.shared.validateAPIKey(key: key)
+                await MainActor.run {
+                    self.zeaburUser = user
+                    // Only save if explicitly verifying (not checking loaded key)
+                    if !silent {
+                        ZeaburService.shared.apiKey = key
+                    }
+                    self.isVerifying = false
+                }
+            } catch {
+                await MainActor.run {
+                    if !silent {
+                        self.authError = "Invalid API Key"
+                    }
+                    if !silent {
+                        // Clear invalid key if we were trying to save it
+                         ZeaburService.shared.apiKey = nil
+                    }
+                    self.isVerifying = false
+                }
+            }
+        }
+    }
 
     private func openConfigFolder() {
         let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
