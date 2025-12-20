@@ -5,7 +5,7 @@ BUILD_DIR = ./build
 APP_PATH = $(BUILD_DIR)/Build/Products/$(CONFIG)/$(APP_NAME).app
 BINARY_PATH = $(APP_PATH)/Contents/MacOS/$(APP_NAME)
 
-.PHONY: all build run debug clean test
+.PHONY: all build run dev clean test install
 
 all: build
 
@@ -20,12 +20,18 @@ build:
 		| sed -E 's/.*\((in target.*)\)/\1/'
 	@echo "\nDone! App located at:\n  $(APP_PATH)"
 
+install: build
+	@echo "Installing $(APP_NAME) to /Applications..."
+	@rm -rf "/Applications/$(APP_NAME).app"
+	@cp -R "$(APP_PATH)" "/Applications/"
+	@echo "Done! $(APP_NAME) has been installed to /Applications."
+
 run: close build
 	@echo "Opening $(APP_NAME)..."
 	@open "$(APP_PATH)"
 
-debug: close build
-	@echo "Starting $(APP_NAME) in debug mode..."
+dev: close build
+	@echo "Starting $(APP_NAME) in dev mode..."
 	@echo "Press Ctrl+C to stop."
 	@echo "----------------------------------------"
 	@$(BINARY_PATH)

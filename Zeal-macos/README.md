@@ -36,10 +36,13 @@ make build
 make run
 
 # Build and run in terminal (for debug logs)
-make debug
+make dev
 
 # Clean build artifacts
 make clean
+
+# Install to /Applications
+make install
 ```
 
 The compiled app will be located at `./build/Build/Products/Release/Zeal.app`.
