@@ -23,7 +23,9 @@ struct SearchView: View {
         )
         .shadow(color: .black.opacity(0.15), radius: 20, y: 8)
         .onAppear {
-            isSearchFieldFocused = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                isSearchFieldFocused = true
+            }
         }
         .onChange(of: viewModel.lockedResult) { _, newValue in
             if newValue != nil {

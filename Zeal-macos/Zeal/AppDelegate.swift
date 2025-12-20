@@ -47,7 +47,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if searchPanelController == nil {
             searchPanelController = SearchPanelController()
         }
-        searchPanelController?.show()
+        searchPanelController?.toggle()
     }
 
     @objc func showSettings() {

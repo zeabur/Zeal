@@ -6,10 +6,24 @@ import Combine
 
 // MARK: - Panel Controller
 
+
+
 @MainActor
-final class SearchPanelController {
+final class SearchPanelController: NSObject, NSWindowDelegate {
     private var panel: NSPanel?
     private var viewModel: SearchViewModel?
+
+    var isVisible: Bool {
+        panel?.isVisible == true
+    }
+
+    func toggle() {
+        if isVisible {
+            hide()
+        } else {
+            show()
+        }
+    }
 
     func show() {
         if panel == nil {
@@ -20,30 +34,33 @@ final class SearchPanelController {
 
         viewModel?.reset()
         centerPanel()
-        panel?.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+        panel?.makeKeyAndOrderFront(nil)
     }
 
     func hide() {
         panel?.orderOut(nil)
     }
 
+    func windowDidResignKey(_ notification: Notification) {
+        hide()
+    }
+
     private func createPanel() -> NSPanel {
         let panel = KeyablePanel(
             contentRect: .zero,
-            styleMask: [.nonactivatingPanel, .titled, .fullSizeContentView],
+            styleMask: [.borderless], // Standard for Spotlight-like panels
             backing: .buffered,
             defer: false
         )
 
+        panel.delegate = self
         panel.isFloatingPanel = true
         panel.level = .floating
-        panel.titleVisibility = .hidden
-        panel.titlebarAppearsTransparent = true
-        panel.isMovableByWindowBackground = true
         panel.backgroundColor = .clear
         panel.isOpaque = false
         panel.hasShadow = true
+        panel.isMovableByWindowBackground = true
         panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         panel.becomesKeyOnlyIfNeeded = false
 
@@ -55,18 +72,30 @@ final class SearchPanelController {
     }
 
     private func centerPanel() {
-        guard let panel, let screen = NSScreen.main ?? NSScreen.screens.first else { return }
-
-        let frame = screen.frame
+        guard let panel else { return }
+        
+        // Find the screen containing the mouse cursor, fallback to main or first screen
+        let mouseLocation = NSEvent.mouseLocation
+        let screen = NSScreen.screens.first { NSMouseInRect(mouseLocation, $0.frame, false) } 
+            ?? NSScreen.main 
+            ?? NSScreen.screens.first
+            
+        guard let targetScreen = screen else { return }
+        
+        let frame = targetScreen.frame
         // Use known panel dimensions (width: 580, initial height: 68)
         let panelWidth: CGFloat = 580
         let panelHeight: CGFloat = 68
-        // Position: horizontally centered, vertically at 50% from top
+        
+        // Position: horizontally centered
+        // Vertically: ~20% from the top (Spotlight style)
         let origin = NSPoint(
             x: frame.midX - panelWidth / 2,
-            y: frame.maxY - frame.height * 0.50 - panelHeight
+            y: frame.maxY - (frame.height * 0.20) - panelHeight
         )
-        panel.setFrameOrigin(origin)
+        
+        let targetFrame = NSRect(origin: origin, size: NSSize(width: panelWidth, height: panelHeight))
+        panel.setFrame(targetFrame, display: true)
     }
 }
 
