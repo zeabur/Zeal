@@ -24,11 +24,22 @@ open Zeal.xcodeproj
 ```
 
 #### CLI (Terminal)
-You can use the included build script to build via `xcodebuild`:
+You can use the included `Makefile` to simplify development tasks:
 
 ```bash
 cd Zeal-macos
-./build.sh
+
+# Build the application
+make build
+
+# Build and run the app
+make run
+
+# Build and run in terminal (for debug logs)
+make debug
+
+# Clean build artifacts
+make clean
 ```
 
 The compiled app will be located at `./build/Build/Products/Release/Zeal.app`.
