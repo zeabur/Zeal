@@ -61,3 +61,5 @@ final class HotkeyManager: ObservableObject {
         return parts.joined()
     }
 }
+
+
