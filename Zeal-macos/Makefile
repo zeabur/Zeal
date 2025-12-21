@@ -7,6 +7,9 @@ BINARY_PATH = $(APP_PATH)/Contents/MacOS/$(APP_NAME)
 
 .PHONY: all build run dev clean test install
 
+SHELL = /bin/bash
+.SHELLFLAGS = -o pipefail -c
+
 all: build
 
 build:
