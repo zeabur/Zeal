@@ -87,6 +87,29 @@ The compiled app will be located at `./build/Build/Products/Release/Zeal.app`.
 | `tw` | `https://twitter.com/{param}` | Open Twitter profile |
 | `npm` | `https://npmjs.com/package/{param}` | Search npm package |
 
+## Desktop Widgets
+
+Zeal includes a native macOS widget to monitor your Zeabur projects right from your desktop or notification center.
+
+### Zeabur Projects Widget
+
+- **Small View**: Displays a high-level summary (Total Projects) to keep your desktop clean.
+- **Medium View**: Displays a list of your most recent projects and their service counts.
+
+### Configuration
+
+The widget is fully configurable:
+1. **Right-click** on the widget.
+2. Select **"Edit ZealWidget"**.
+3. Click **Choose** next to the "Project" option.
+4. Select a specific project to monitor. You can **search** by name if you have many projects.
+   - If a project is selected, the widget will show status specifically for that project.
+   - If no project is selected, it defaults to showing your top 3 projects.
+
+### Troubleshooting
+- **No Data / "Please login"**: Ensure you are logged into the main Zeal app.
+- **Keychain Access Prompt**: If macOS asks for keychain permission, please **Log out** and **Log in** again in the main Zeal app. This refreshes the shared credentials.
+
 ## Configuration
 
 Keywords are stored in:
