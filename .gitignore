@@ -7,11 +7,6 @@ DerivedData/
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .netrc
 
-# Configs
-configs/*.json
-!configs/default-keywords.sample.json
-*.json
-
 # Windows
 .vs/
 bin/
