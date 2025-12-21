@@ -14,7 +14,7 @@ jobs:
 
       - name: Build
         run: |
-          cd macos
+          cd src
           xcodebuild \
             -scheme Zeal \
             -configuration Release \
@@ -28,10 +28,10 @@ jobs:
 
       - name: Create ZIP
         run: |
-          cd macos/build/Build/Products/Release
+          cd src/build/Build/Products/Release
           zip -r Zeal-macOS.zip Zeal.app
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: macos/build/Build/Products/Release/Zeal-macOS.zip
+          files: src/build/Build/Products/Release/Zeal-macOS.zip

@@ -33,6 +33,7 @@ struct ZeaburSearchProvider {
                     id: "zeabur-project-\(project.id)",
                     title: project.name,
                     subtitle: "Zeabur Project • \(project.services.count) Services",
+                    status: .deployed, // Mock status for visual demo
                     action: {
                         if let url = URL(string: "https://dash.zeabur.com/projects/\(project.id)") {
                             NSWorkspace.shared.open(url)

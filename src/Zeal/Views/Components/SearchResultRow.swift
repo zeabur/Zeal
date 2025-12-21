@@ -7,10 +7,17 @@ struct SearchResultRow: View {
     var body: some View {
         HStack(spacing: 10) {
             // App icon or keyword indicator
+            // App icon, keyword indicator, or status dot
             if let icon = result.icon {
                 Image(nsImage: icon)
                     .resizable()
                     .frame(width: 24, height: 24)
+            } else if let status = result.status {
+                 // Status Dot
+                Circle()
+                    .fill(statusColor(for: status))
+                    .frame(width: 12, height: 12)
+                    .padding(6) // Align with 24x24 icon space
             } else {
                 Image(systemName: "link")
                     .font(.system(size: 14))
@@ -21,6 +28,13 @@ struct SearchResultRow: View {
             Text(result.title)
                 .font(.system(size: 18, weight: .medium))
                 .foregroundColor(.primary)
+            
+            // Temporary Debug
+            if case .zeabur = result {
+               Text(result.status != nil ? "[Status: OK]" : "[Status: NIL]")
+                   .font(.caption)
+                   .foregroundColor(.red)
+            }
 
             if let subtitle = result.subtitle {
                 Text(subtitle)
@@ -41,5 +55,14 @@ struct SearchResultRow: View {
         .padding(.vertical, 10)
         .background(isSelected ? Color.primary.opacity(0.06) : Color.clear)
         .contentShape(Rectangle())
+    }
+    
+    private func statusColor(for status: SearchResult.ServiceStatus) -> Color {
+        switch status {
+        case .deployed: return .green
+        case .failed: return .red
+        case .deploying: return .yellow
+        case .none: return .gray
+        }
     }
 }

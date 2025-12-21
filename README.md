@@ -1,8 +1,8 @@
-# Zeal
+# Zeal for macOS
 
-A fast, keyboard-driven launcher. Quickly search and open your custom URL shortcuts and applications with a single hotkey.
+A fast, keyboard-driven launcher for macOS. Quickly search and open your custom URL shortcuts and applications with a single hotkey.
 
-![Zeal Screenshot](assets/screenshot.png)
+![Zeal Screenshot](src/assets/screenshot.png)
 
 ## Features
 
@@ -94,14 +94,12 @@ You can export/import keywords from the Settings panel.
 ### Project Structure
 
 ```
-Zeal/
-├── assets/                 # Shared assets
-├── configs/                # Shared configurations
-│   ├── default-keywords.sample.json
-│   └── zeabur-admin-keyword.json (private)
-├── macos/                  # macOS Native App
-│   ├── Zeal.xcodeproj
-│   └── Zeal/
+src/
+├── assets/
+├── configs/
+│   └── default-keywords.sample.json
+├── Zeal.xcodeproj
+└── Zeal/
 └── README.md
 ```
 
@@ -114,15 +112,15 @@ Zeal/
 
 #### Xcode
 
-1. Open `macos/Zeal.xcodeproj`
+1. Open `src/Zeal.xcodeproj`
 2. Build and run in Xcode (⌘R)
 
 #### CLI (Terminal)
 
-You can use the included `Makefile` in the `macos` directory:
+You can use the included `Makefile` in the `src` directory:
 
 ```bash
-cd macos
+cd src
 
 # Build the application
 make build
@@ -140,7 +138,7 @@ make clean
 make install
 ```
 
-The compiled app will be located at `macos/build/Build/Products/Release/Zeal.app`.
+The compiled app will be located at `src/build/Build/Products/Release/Zeal.app`.
 
 ### Dependencies
 
@@ -148,7 +146,7 @@ The compiled app will be located at `macos/build/Build/Products/Release/Zeal.app
 
 ### Documentation
 
-- [App Intents & System Integration](macos/docs/AppIntents.md) - Planned features for Shortcuts, Siri, and Spotlight.
+- [App Intents & System Integration](src/docs/AppIntents.md) - Planned features for Shortcuts, Siri, and Spotlight.
 
 ## License
 

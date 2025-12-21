@@ -8,9 +8,15 @@ enum SearchResult: Identifiable, Equatable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
+    enum ServiceStatus {
+        case deployed
+        case failed
+        case deploying
+        case none
+    }
     case keyword(Keyword)
     case app(AppResult)
-    case zeabur(id: String, title: String, subtitle: String, action: () -> Void)
+    case zeabur(id: String, title: String, subtitle: String, status: ServiceStatus, action: () -> Void)
 
     var id: String {
         switch self {
@@ -18,7 +24,7 @@ enum SearchResult: Identifiable, Equatable, Hashable {
             return "keyword-\(keyword.id.uuidString)"
         case .app(let app):
             return "app-\(app.id)"
-        case .zeabur(let id, _, _, _):
+        case .zeabur(let id, _, _, _, _):
             return id
         }
     }
@@ -29,7 +35,7 @@ enum SearchResult: Identifiable, Equatable, Hashable {
             return keyword.shortcut
         case .app(let app):
             return app.name
-        case .zeabur(_, let title, _, _):
+        case .zeabur(_, let title, _, _, _):
             return title
         }
     }
@@ -40,7 +46,7 @@ enum SearchResult: Identifiable, Equatable, Hashable {
             return keyword.name.isEmpty ? nil : keyword.name
         case .app:
             return "Application"
-        case .zeabur(_, _, let subtitle, _):
+        case .zeabur(_, _, let subtitle, _, _):
             return subtitle
         }
     }
@@ -66,6 +72,13 @@ enum SearchResult: Identifiable, Equatable, Hashable {
             return nil
         }
     }
+    
+    var status: ServiceStatus? {
+        if case let .zeabur(_, _, _, status, _) = self {
+            return status
+        }
+        return nil
+    }
 
     func execute(param: String?) {
         switch self {
@@ -73,7 +86,7 @@ enum SearchResult: Identifiable, Equatable, Hashable {
             URLExecutor.execute(keyword: keyword, param: param)
         case .app(let app):
             app.launch()
-        case .zeabur(_, _, _, let action):
+        case .zeabur(_, _, _, _, let action):
             action()
         }
     }
