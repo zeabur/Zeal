@@ -3,18 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		3659A1662EE8928F00ACE522 /* default-keywords.json in Resources */ = {isa = PBXBuildFile; fileRef = 3659A1652EE8928E00ACE522 /* default-keywords.json */; };
-		3678932D2EF6FDAF0049C28E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3678932C2EF6FDAF0049C28E /* WidgetKit.framework */; };
-		3678932F2EF6FDAF0049C28E /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3678932E2EF6FDAF0049C28E /* SwiftUI.framework */; };
-		3678933C2EF6FDB10049C28E /* ZealWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3678932A2EF6FDAF0049C28E /* ZealWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		367893462EF6FF1E0049C28E /* ZeaburService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000016 /* ZeaburService.swift */; };
-		367893472EF6FF3E0049C28E /* ZeaburUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000018 /* ZeaburUser.swift */; };
-		367893482EF6FF4E0049C28E /* ZeaburModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000019 /* ZeaburModels.swift */; };
-		367893492EF6FF580049C28E /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000017 /* KeychainService.swift */; };
 		A1000001 /* ZealApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001 /* ZealApp.swift */; };
 		A1000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000002 /* AppDelegate.swift */; };
 		A1000003 /* Keyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000003 /* Keyword.swift */; };
@@ -39,16 +32,6 @@
 		BA100003 /* Key+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB200003 /* Key+Description.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		3678933A2EF6FDB10049C28E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A9000001 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 367893292EF6FDAF0049C28E;
-			remoteInfo = ZealWidgetExtension;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		3678933D2EF6FDB10049C28E /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -56,7 +39,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				3678933C2EF6FDB10049C28E /* ZealWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,10 +47,8 @@
 
 /* Begin PBXFileReference section */
 		3659A1652EE8928E00ACE522 /* default-keywords.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "default-keywords.json"; sourceTree = "<group>"; };
-		3678932A2EF6FDAF0049C28E /* ZealWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ZealWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3678932C2EF6FDAF0049C28E /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		3678932E2EF6FDAF0049C28E /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		3678934A2EF700730049C28E /* ZealWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZealWidgetExtension.entitlements; sourceTree = "<group>"; };
 		A2000001 /* ZealApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZealApp.swift; sourceTree = "<group>"; };
 		A2000002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2000003 /* Keyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyword.swift; sourceTree = "<group>"; };
@@ -95,30 +75,7 @@
 		BB200003 /* Key+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Key+Description.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		367893402EF6FDB10049C28E /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 367893292EF6FDAF0049C28E /* ZealWidgetExtension */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		367893302EF6FDAF0049C28E /* ZealWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (367893402EF6FDB10049C28E /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = ZealWidget; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
-		367893272EF6FDAF0049C28E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3678932F2EF6FDAF0049C28E /* SwiftUI.framework in Frameworks */,
-				3678932D2EF6FDAF0049C28E /* WidgetKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A5000001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -142,9 +99,7 @@
 		A6000001 = {
 			isa = PBXGroup;
 			children = (
-				3678934A2EF700730049C28E /* ZealWidgetExtension.entitlements */,
 				A6000002 /* Zeal */,
-				367893302EF6FDAF0049C28E /* ZealWidget */,
 				3678932B2EF6FDAF0049C28E /* Frameworks */,
 				A6000003 /* Products */,
 			);
@@ -171,7 +126,6 @@
 			isa = PBXGroup;
 			children = (
 				A4000001 /* Zeal.app */,
-				3678932A2EF6FDAF0049C28E /* ZealWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -233,28 +187,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		367893292EF6FDAF0049C28E /* ZealWidgetExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 367893412EF6FDB10049C28E /* Build configuration list for PBXNativeTarget "ZealWidgetExtension" */;
-			buildPhases = (
-				367893262EF6FDAF0049C28E /* Sources */,
-				367893272EF6FDAF0049C28E /* Frameworks */,
-				367893282EF6FDAF0049C28E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				367893302EF6FDAF0049C28E /* ZealWidget */,
-			);
-			name = ZealWidgetExtension;
-			packageProductDependencies = (
-			);
-			productName = ZealWidgetExtension;
-			productReference = 3678932A2EF6FDAF0049C28E /* ZealWidgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		A7000001 /* Zeal */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A8000003 /* Build configuration list for PBXNativeTarget "Zeal" */;
@@ -267,7 +199,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				3678933B2EF6FDB10049C28E /* PBXTargetDependency */,
 			);
 			name = Zeal;
 			packageProductDependencies = (
@@ -287,9 +218,6 @@
 				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
-					367893292EF6FDAF0049C28E = {
-						CreatedOnToolsVersion = 26.0;
-					};
 					A7000001 = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -312,19 +240,11 @@
 			projectRoot = "";
 			targets = (
 				A7000001 /* Zeal */,
-				367893292EF6FDAF0049C28E /* ZealWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		367893282EF6FDAF0049C28E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A5000003 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -337,17 +257,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		367893262EF6FDAF0049C28E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				367893482EF6FF4E0049C28E /* ZeaburModels.swift in Sources */,
-				367893472EF6FF3E0049C28E /* ZeaburUser.swift in Sources */,
-				367893492EF6FF580049C28E /* KeychainService.swift in Sources */,
-				367893462EF6FF1E0049C28E /* ZeaburService.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A5000002 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -377,79 +286,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		3678933B2EF6FDB10049C28E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 367893292EF6FDAF0049C28E /* ZealWidgetExtension */;
-			targetProxy = 3678933A2EF6FDB10049C28E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		3678933E2EF6FDB10049C28E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = ZealWidgetExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ZealWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ZealWidget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zeabur.Zeal.ZealWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		3678933F2EF6FDB10049C28E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = ZealWidgetExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ZealWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ZealWidget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zeabur.Zeal.ZealWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 		A8000002 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -641,15 +478,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		367893412EF6FDB10049C28E /* Build configuration list for PBXNativeTarget "ZealWidgetExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3678933E2EF6FDB10049C28E /* Debug */,
-				3678933F2EF6FDB10049C28E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		A8000001 /* Build configuration list for PBXProject "Zeal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
