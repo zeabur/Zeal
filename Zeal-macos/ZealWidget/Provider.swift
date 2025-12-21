@@ -1,7 +1,7 @@
 import WidgetKit
 import SwiftUI
 
-struct Provider: TimelineProvider {
+struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), projects: [
             ZeaburProject(_id: "1", name: "My Project", services: []),
@@ -9,40 +9,42 @@ struct Provider: TimelineProvider {
         ])
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+    func snapshot(for configuration: SelectProjectIntent, in context: Context) async -> SimpleEntry {
         let entry = SimpleEntry(date: Date(), projects: [
             ZeaburProject(_id: "1", name: "My Project", services: [ZeaburServiceItem(_id: "s1", name: "web")]),
             ZeaburProject(_id: "2", name: "Demo App", services: [])
         ])
-        completion(entry)
+        return entry
     }
-
-    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
-        Task {
-            var projects: [ZeaburProject] = []
-            
-            // Attempt to fetch real data
-            if ZeaburService.shared.isAuthenticated {
-                do {
-                    // Force refresh to get latest status
-                    projects = try await ZeaburService.shared.fetchProjects(forceRefresh: true)
-                    // limit to top 3
-                    projects = Array(projects.prefix(3))
-                } catch {
-                    print("Widget fetch error: \(error)")
+    
+    func timeline(for configuration: SelectProjectIntent, in context: Context) async -> Timeline<SimpleEntry> {
+        var projects: [ZeaburProject] = []
+        
+        // Attempt to fetch real data
+        if ZeaburService.shared.isAuthenticated {
+            do {
+                // Force refresh to get latest status
+                let allProjects = try await ZeaburService.shared.fetchProjects(forceRefresh: true)
+                
+                if let selectedProject = configuration.project {
+                    // Filter for the selected project
+                    projects = allProjects.filter { $0._id == selectedProject.id }
+                } else {
+                    // Default to top 3 if nothing selected
+                    projects = Array(allProjects.prefix(3))
                 }
-            } else {
-                print("Widget: Not authenticated")
+            } catch {
+                print("Widget fetch error: \(error)")
             }
-            
-            let entry = SimpleEntry(date: Date(), projects: projects)
-            
-            // Refresh every 15 minutes or when app data changes
-            // Note: Background fetches are limited by iOS/macOS budgeting
-            let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: Date())!
-            let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
-            completion(timeline)
+        } else {
+            print("Widget: Not authenticated")
         }
+        
+        let entry = SimpleEntry(date: Date(), projects: projects)
+        
+        // Refresh every 15 minutes or when app data changes
+        let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: Date())!
+        return Timeline(entries: [entry], policy: .after(nextUpdate))
     }
 }
 

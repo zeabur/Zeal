@@ -7,9 +7,12 @@ struct ZealWidget: Widget {
     let kind: String = "ZealWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+
+        AppIntentConfiguration(kind: kind, intent: SelectProjectIntent.self, provider: Provider()) { entry in
             ZealWidgetEntryView(entry: entry)
-                .containerBackground(Color(red: 0.1, green: 0.1, blue: 0.12), for: .widget)
+                .containerBackground(for: .widget) {
+                    Color("WidgetBackground")
+                }
         }
         .contentMarginsDisabled()
         .configurationDisplayName("Zeabur Projects")

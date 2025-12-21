@@ -12,13 +12,17 @@ final class KeychainService {
         case itemNotFound
     }
     
+    // accessGroup should match the one in entitlements (TeamID.Group)
+    private let accessGroup = "BB726GNDGJ.com.zeabur.Zeal.SharedKeychain"
+    
     func save(key: String, value: String) throws {
         let data = value.data(using: .utf8)!
         
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,
-            kSecValueData as String: data
+            kSecValueData as String: data,
+            kSecAttrAccessGroup as String: accessGroup
         ]
         
         // Try to add
@@ -50,7 +54,8 @@ final class KeychainService {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,
             kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecAttrAccessGroup as String: accessGroup
         ]
         
         var dataTypeRef: AnyObject?
@@ -68,7 +73,8 @@ final class KeychainService {
     func delete(key: String) throws {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key
+            kSecAttrAccount as String: key,
+            kSecAttrAccessGroup as String: accessGroup
         ]
         
         let status = SecItemDelete(query as CFDictionary)
