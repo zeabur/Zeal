@@ -4,6 +4,7 @@ CONFIG = Release
 BUILD_DIR = ./build
 APP_PATH = $(BUILD_DIR)/Build/Products/$(CONFIG)/$(APP_NAME).app
 BINARY_PATH = $(APP_PATH)/Contents/MacOS/$(APP_NAME)
+PROJECT_PATH = src/Zeal.xcodeproj
 
 .PHONY: all build run dev clean test install
 
@@ -15,6 +16,7 @@ all: build
 build:
 	@echo "Building $(APP_NAME)..."
 	@xcodebuild -scheme $(SCHEME) \
+		-project $(PROJECT_PATH) \
 		-configuration $(CONFIG) \
 		-destination 'platform=macOS' \
 		-derivedDataPath $(BUILD_DIR) \
@@ -48,4 +50,4 @@ clean:
 	@echo "Cleaned build directory."
 
 test:
-	@./test-api.sh
+	@./src/test-api.sh

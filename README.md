@@ -94,13 +94,15 @@ You can export/import keywords from the Settings panel.
 ### Project Structure
 
 ```
-src/
-├── assets/
-├── configs/
-│   └── default-keywords.sample.json
-├── Zeal.xcodeproj
-└── Zeal/
-└── README.md
+.
+├── Makefile
+├── README.md
+└── src/
+    ├── assets/
+    ├── configs/
+    │   └── default-keywords.sample.json
+    ├── Zeal.xcodeproj
+    └── Zeal/
 ```
 
 ### Requirements
@@ -117,11 +119,9 @@ src/
 
 #### CLI (Terminal)
 
-You can use the included `Makefile` in the `src` directory:
+You can use the included `Makefile` in the project root:
 
 ```bash
-cd src
-
 # Build the application
 make build
 
@@ -138,7 +138,7 @@ make clean
 make install
 ```
 
-The compiled app will be located at `src/build/Build/Products/Release/Zeal.app`.
+The compiled app will be located at `build/Build/Products/Release/Zeal.app`.
 
 ### Dependencies
 
