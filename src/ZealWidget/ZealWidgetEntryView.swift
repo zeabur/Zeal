@@ -19,7 +19,7 @@ struct ZealWidgetEntryView : View {
 
 struct ZealWidgetSmallView: View {
     var entry: Provider.Entry
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -31,11 +31,19 @@ struct ZealWidgetSmallView: View {
                     .fontWeight(.bold)
                     .foregroundColor(.white)
             }
-            
+
             Spacer()
-            
-            if entry.projects.isEmpty {
-                 Text("No Projects")
+
+            if !entry.isAuthenticated {
+                Text("Not logged in")
+                    .font(.caption2)
+                    .foregroundColor(.yellow)
+            } else if let error = entry.errorMessage {
+                Text(error)
+                    .font(.caption2)
+                    .foregroundColor(.red)
+            } else if entry.projects.isEmpty {
+                Text("No Projects")
                     .font(.caption2)
                     .foregroundColor(.gray)
             } else {
@@ -57,7 +65,7 @@ struct ZealWidgetSmallView: View {
 
 struct ZealWidgetMediumView: View {
     var entry: Provider.Entry
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
@@ -68,17 +76,19 @@ struct ZealWidgetMediumView: View {
                     .foregroundColor(.white)
                 Spacer()
             }
-            
-            if entry.projects.isEmpty {
-                if ZeaburService.shared.isAuthenticated {
-                    Text("No projects found.")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                } else {
-                    Text("Please login in Zeal app.")
-                        .font(.caption)
-                        .foregroundColor(.yellow)
-                }
+
+            if !entry.isAuthenticated {
+                Text("Please login in Zeal app.")
+                    .font(.caption)
+                    .foregroundColor(.yellow)
+            } else if let error = entry.errorMessage {
+                Text(error)
+                    .font(.caption)
+                    .foregroundColor(.red)
+            } else if entry.projects.isEmpty {
+                Text("No projects found.")
+                    .font(.caption)
+                    .foregroundColor(.gray)
             } else {
                 VStack(spacing: 8) {
                     ForEach(entry.projects.prefix(3), id: \.id) { project in

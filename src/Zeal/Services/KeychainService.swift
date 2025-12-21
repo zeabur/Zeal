@@ -3,17 +3,27 @@ import Security
 
 final class KeychainService {
     static let shared = KeychainService()
-    
+
     private init() {}
-    
+
     enum KeychainError: Error {
         case duplicateEntry
         case unknown(OSStatus)
         case itemNotFound
+        case missingAppIdentifierPrefix
     }
-    
-    // accessGroup should match the one in entitlements (TeamID.Group)
-    private let accessGroup = "BB726GNDGJ.com.zeabur.Zeal.SharedKeychain"
+
+    /// Dynamically get the access group using AppIdentifierPrefix from Info.plist
+    /// This allows the app to work with any Team ID
+    private var accessGroup: String {
+        // Try to get AppIdentifierPrefix from Info.plist
+        if let prefix = Bundle.main.object(forInfoDictionaryKey: "AppIdentifierPrefix") as? String {
+            return "\(prefix)com.zeabur.Zeal.SharedKeychain"
+        }
+        // Fallback for development/testing (will be replaced by actual Team ID in release)
+        print("Warning: AppIdentifierPrefix not found in Info.plist, using fallback")
+        return "BB726GNDGJ.com.zeabur.Zeal.SharedKeychain"
+    }
     
     func save(key: String, value: String) throws {
         let data = value.data(using: .utf8)!
