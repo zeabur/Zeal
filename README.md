@@ -30,9 +30,6 @@ A fast, keyboard-driven launcher. Quickly search and open your custom URL shortc
 2. Unzip and drag `Zeal.app` to your Applications folder.
 3. Open Zeal.
 
-### Windows
-
-The Windows application is currently in development.
 
 ## Usage
 
@@ -105,11 +102,53 @@ Zeal/
 ├── macos/                  # macOS Native App
 │   ├── Zeal.xcodeproj
 │   └── Zeal/
-├── windows/                # Windows Native App (Coming Soon)
 └── README.md
 ```
 
-For macOS development instructions (Build from source), please see [macos/README.md](macos/README.md).
+### Requirements
+
+- macOS 14.0+
+- Xcode 15.0+
+
+### Build from Source
+
+#### Xcode
+
+1. Open `macos/Zeal.xcodeproj`
+2. Build and run in Xcode (⌘R)
+
+#### CLI (Terminal)
+
+You can use the included `Makefile` in the `macos` directory:
+
+```bash
+cd macos
+
+# Build the application
+make build
+
+# Build and run the app
+make run
+
+# Build and run in terminal (for debug logs)
+make dev
+
+# Clean build artifacts
+make clean
+
+# Install to /Applications
+make install
+```
+
+The compiled app will be located at `macos/build/Build/Products/Release/Zeal.app`.
+
+### Dependencies
+
+- [HotKey](https://github.com/soffes/HotKey) - Global keyboard shortcuts
+
+### Documentation
+
+- [App Intents & System Integration](macos/docs/AppIntents.md) - Planned features for Shortcuts, Siri, and Spotlight.
 
 ## License
 
