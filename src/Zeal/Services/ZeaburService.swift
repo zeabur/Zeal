@@ -1,11 +1,16 @@
 import Foundation
+import WidgetKit
 
 final class ZeaburService {
     static let shared = ZeaburService()
-    
+
     private let apiEndpoint = URL(string: "https://api.zeabur.com/graphql")!
     private let keychainKey = "com.zeabur.zeal.apikey"
-    
+
+    // App Group for Widget sharing
+    private let appGroupID = "group.com.zeabur.Zeal"
+    private let widgetProjectsKey = "cachedProjects"
+
     // Simple memory cache
     private var cachedProjects: [ZeaburProject]?
     private var cachedUser: ZeaburUser?
@@ -29,6 +34,7 @@ final class ZeaburService {
                 try? KeychainService.shared.delete(key: keychainKey)
                 self.cachedUser = nil
                 self.cachedProjects = nil
+                self.clearWidgetData()
             }
         }
     }
@@ -36,7 +42,38 @@ final class ZeaburService {
     var isAuthenticated: Bool {
         return apiKey != nil
     }
-    
+
+    // MARK: - Widget Data Sharing
+
+    private struct WidgetProject: Codable {
+        let id: String
+        let name: String
+        let serviceCount: Int
+    }
+
+    private func saveProjectsForWidget(_ projects: [ZeaburProject]) {
+        guard let defaults = UserDefaults(suiteName: appGroupID) else { return }
+
+        let widgetProjects = projects.map { project in
+            WidgetProject(
+                id: project._id,
+                name: project.name,
+                serviceCount: project.services.count
+            )
+        }
+
+        if let data = try? JSONEncoder().encode(widgetProjects) {
+            defaults.set(data, forKey: widgetProjectsKey)
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+    }
+
+    private func clearWidgetData() {
+        guard let defaults = UserDefaults(suiteName: appGroupID) else { return }
+        defaults.removeObject(forKey: widgetProjectsKey)
+        WidgetCenter.shared.reloadAllTimelines()
+    }
+
     enum APIError: Error {
         case invalidURL
         case noData
@@ -143,7 +180,10 @@ final class ZeaburService {
             // Update cache
             self.cachedProjects = projects
             self.lastFetchTime = Date()
-            
+
+            // Save for Widget
+            self.saveProjectsForWidget(projects)
+
             return projects
         } catch {
              print("Decoding error: \(error)")
