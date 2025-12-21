@@ -102,14 +102,14 @@ Zeal/
 ├── configs/                # Shared configurations
 │   ├── default-keywords.sample.json
 │   └── zeabur-admin-keyword.json (private)
-├── Zeal-macos/             # macOS Native App
+├── macos/                  # macOS Native App
 │   ├── Zeal.xcodeproj
 │   └── Zeal/
-├── Zeal-windows/           # Windows Native App (Coming Soon)
+├── windows/                # Windows Native App (Coming Soon)
 └── README.md
 ```
 
-For macOS development instructions (Build from source), please see [Zeal-macos/README.md](Zeal-macos/README.md).
+For macOS development instructions (Build from source), please see [macos/README.md](macos/README.md).
 
 ## License
 

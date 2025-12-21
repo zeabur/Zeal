@@ -16,7 +16,7 @@ User documentation has been moved to the [Root README](../README.md). This docum
 #### Xcode
 ```bash
 git clone https://github.com/zeabur/zeal.git
-cd zeal/Zeal-macos
+cd zeal/macos
 open Zeal.xcodeproj
 # Build and run in Xcode (⌘R)
 ```
@@ -25,7 +25,7 @@ open Zeal.xcodeproj
 You can use the included `Makefile` to simplify development tasks:
 
 ```bash
-cd Zeal-macos
+cd macos
 
 # Build the application
 make build
