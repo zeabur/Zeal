@@ -9,7 +9,7 @@ A fast, keyboard-driven launcher. Quickly search and open your custom URL shortc
 ### Zeabur Integration ⚡️
 
 - **Project Search** - Directly search your Zeabur projects and services by name.
-- **Service Status** - View service counts and status at a glance.
+- **Service Status** - View service counts at a glance.
 - **Dashboard Access** - One-click access to your project dashboard.
 
 
