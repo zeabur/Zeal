@@ -45,26 +45,45 @@ final class ZeaburService {
 
     // MARK: - Widget Data Sharing
 
-    private struct WidgetProject: Codable {
+    struct WidgetService: Codable {
         let id: String
         let name: String
-        let serviceCount: Int
+        let status: String
+    }
+
+    struct WidgetProject: Codable {
+        let id: String
+        let name: String
+        let services: [WidgetService]
     }
 
     private func saveProjectsForWidget(_ projects: [ZeaburProject]) {
-        guard let defaults = UserDefaults(suiteName: appGroupID) else { return }
+        guard let defaults = UserDefaults(suiteName: appGroupID) else {
+            print("Widget: Failed to get UserDefaults")
+            return
+        }
 
         let widgetProjects = projects.map { project in
             WidgetProject(
                 id: project._id,
                 name: project.name,
-                serviceCount: project.services.count
+                services: project.services.map { service in
+                    WidgetService(
+                        id: service._id,
+                        name: service.name,
+                        status: service.status?.rawValue ?? "UNKNOWN"
+                    )
+                }
             )
         }
 
-        if let data = try? JSONEncoder().encode(widgetProjects) {
+        do {
+            let data = try JSONEncoder().encode(widgetProjects)
             defaults.set(data, forKey: widgetProjectsKey)
+            print("Widget: Saved \(widgetProjects.count) projects, \(data.count) bytes")
             WidgetCenter.shared.reloadAllTimelines()
+        } catch {
+            print("Widget: Encode error - \(error)")
         }
     }
 
@@ -142,6 +161,7 @@ final class ZeaburService {
                 services {
                   _id
                   name
+                  status
                 }
               }
             }

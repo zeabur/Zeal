@@ -213,6 +213,18 @@ struct SettingsView: View {
                     .font(.system(size: 12, design: .monospaced))
                     .foregroundColor(.secondary)
             }
+
+            HStack {
+                Text("Widget")
+                    .font(.system(size: 13))
+                Spacer()
+                Button("Refresh") {
+                    Task {
+                        _ = try? await ZeaburService.shared.fetchProjects(forceRefresh: true)
+                    }
+                }
+                .controlSize(.small)
+            }
         }
     }
 

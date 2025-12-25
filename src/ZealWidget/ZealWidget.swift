@@ -10,10 +10,31 @@ import SwiftUI
 
 // MARK: - Shared Data
 
+struct WidgetService: Codable, Identifiable {
+    let id: String
+    let name: String
+    let status: String
+
+    var statusColor: Color {
+        switch status {
+        case "RUNNING":
+            return .green
+        case "STARTING", "BUILDING", "PENDING":
+            return .yellow
+        case "CRASHED", "PULL_FAILED":
+            return .red
+        case "STOPPED", "SUSPENDED", "STOPPING":
+            return .gray
+        default:
+            return .secondary
+        }
+    }
+}
+
 struct WidgetProject: Codable, Identifiable {
     let id: String
     let name: String
-    let serviceCount: Int
+    let services: [WidgetService]
 }
 
 enum SharedDataManager {
@@ -25,12 +46,22 @@ enum SharedDataManager {
     }
 
     static func loadProjects() -> [WidgetProject] {
-        guard let defaults = sharedDefaults,
-              let data = defaults.data(forKey: projectsKey),
-              let projects = try? JSONDecoder().decode([WidgetProject].self, from: data) else {
+        guard let defaults = sharedDefaults else {
+            print("Widget: No shared defaults")
             return []
         }
-        return projects
+        guard let data = defaults.data(forKey: projectsKey) else {
+            print("Widget: No data for key")
+            return []
+        }
+        do {
+            let projects = try JSONDecoder().decode([WidgetProject].self, from: data)
+            print("Widget: Loaded \(projects.count) projects")
+            return projects
+        } catch {
+            print("Widget: Decode error - \(error)")
+            return []
+        }
     }
 }
 
@@ -45,9 +76,17 @@ struct ProjectEntry: TimelineEntry {
         ProjectEntry(
             date: Date(),
             projects: [
-                WidgetProject(id: "1", name: "my-app", serviceCount: 2),
-                WidgetProject(id: "2", name: "api-server", serviceCount: 1),
-                WidgetProject(id: "3", name: "website", serviceCount: 3)
+                WidgetProject(id: "1", name: "my-app", services: [
+                    WidgetService(id: "1", name: "web", status: "RUNNING"),
+                    WidgetService(id: "2", name: "api", status: "RUNNING")
+                ]),
+                WidgetProject(id: "2", name: "api-server", services: [
+                    WidgetService(id: "3", name: "server", status: "BUILDING")
+                ]),
+                WidgetProject(id: "3", name: "website", services: [
+                    WidgetService(id: "4", name: "frontend", status: "RUNNING"),
+                    WidgetService(id: "5", name: "backend", status: "CRASHED")
+                ])
             ],
             isPlaceholder: true
         )
@@ -107,32 +146,53 @@ struct SmallWidgetView: View {
     let entry: ProjectEntry
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Image(systemName: "cube.fill")
-                    .foregroundColor(.purple)
-                Text("Zeabur")
-                    .font(.headline)
-                    .fontWeight(.semibold)
-            }
+        VStack(alignment: .leading, spacing: 6) {
+            if let project = entry.projects.first {
+                // Header
+                HStack {
+                    Image(systemName: "cube.fill")
+                        .foregroundColor(.purple)
+                        .font(.caption)
+                    Text(project.name)
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                        .lineLimit(1)
+                }
 
-            if entry.projects.isEmpty {
+                // Services
+                VStack(alignment: .leading, spacing: 4) {
+                    ForEach(project.services.prefix(4)) { service in
+                        HStack(spacing: 6) {
+                            Circle()
+                                .fill(service.statusColor)
+                                .frame(width: 6, height: 6)
+                            Text(service.name)
+                                .font(.caption2)
+                                .lineLimit(1)
+                        }
+                    }
+                    if project.services.count > 4 {
+                        Text("+\(project.services.count - 4) more")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            } else {
+                HStack {
+                    Image(systemName: "cube.fill")
+                        .foregroundColor(.purple)
+                    Text("Zeabur")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                }
                 Spacer()
                 Text("請開啟 Zeal 登入")
                     .font(.caption)
                     .foregroundColor(.secondary)
                 Spacer()
-            } else {
-                Spacer()
-                Text("\(entry.projects.count)")
-                    .font(.system(size: 36, weight: .bold))
-                Text("專案")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                Spacer()
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding()
         .redacted(reason: entry.isPlaceholder ? .placeholder : [])
     }
@@ -193,10 +253,26 @@ struct MediumWidgetView: View {
 struct ProjectRow: View {
     let project: WidgetProject
 
+    var overallStatusColor: Color {
+        // Red if any service has error
+        if project.services.contains(where: { $0.status == "CRASHED" || $0.status == "PULL_FAILED" }) {
+            return .red
+        }
+        // Yellow if any service is in progress
+        if project.services.contains(where: { ["STARTING", "BUILDING", "PENDING", "STOPPING"].contains($0.status) }) {
+            return .yellow
+        }
+        // Green if all running
+        if project.services.allSatisfy({ $0.status == "RUNNING" }) {
+            return .green
+        }
+        return .gray
+    }
+
     var body: some View {
         HStack(spacing: 6) {
             Circle()
-                .fill(Color.green)
+                .fill(overallStatusColor)
                 .frame(width: 8, height: 8)
 
             Text(project.name)
@@ -204,6 +280,10 @@ struct ProjectRow: View {
                 .lineLimit(1)
 
             Spacer()
+
+            Text("\(project.services.count)")
+                .font(.caption2)
+                .foregroundColor(.secondary)
         }
         .padding(.vertical, 4)
         .padding(.horizontal, 8)
